@@ -38,9 +38,32 @@ function successCallback(position) {
     }
     return minObj;
   }
+  const getStation = ( hash, id, direction ) => {
+    let end_condition;
+    if( direction == -1 ) end_condition = 0;
+    else  end_condition = hash.length;
+
+    let now = id;
+    while( id != end_condition ) {
+      if( "sta" in hash[now] ) {
+        return hash[now];
+      }
+      now += direction;
+    }
+  }
+  const getNear = ( hash, min ) => {
+    let min_id = hash.indexOf( min );
+    let station1 = getStation( hash, min_id, -1 );
+    let station2 = getStation( hash, min_id, 1 );
+    return [station1.sta, station2.sta]
+  }
   let min = getMin( dataList, lat, lng );
+  let near = getNear( dataList, min );
   // 並べ替えが終わるとposition[0]に現在地から一番近い場所の情報が入っている
   console.log(min);
+  console.log(near);
+  document.querySelector('#sta1').innerText = near[0];
+  document.querySelector('#sta2').innerText = near[1];
 }
 
 /***** 位置情報が取得できない場合 *****/
