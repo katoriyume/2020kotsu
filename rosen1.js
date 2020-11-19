@@ -58,7 +58,7 @@ function successCallback(position) {
     return [station1, station2]
   }
   let min = getMin( dataList, lat, lng );
-  if( "sta" in dataList ) {
+  if( "sta" in min ) {
     document.querySelector('#sta').innerText = min.sta;
     let line_id = min.id;
     //console.log(sta_num);
