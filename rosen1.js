@@ -55,15 +55,20 @@ function successCallback(position) {
     let min_id = hash.indexOf( min );
     let station1 = getStation( hash, min_id, -1 );
     let station2 = getStation( hash, min_id, 1 );
-    return [station1.sta, station2.sta]
+    return [station1, station2]
   }
   let min = getMin( dataList, lat, lng );
   let near = getNear( dataList, min );
   // 並べ替えが終わるとposition[0]に現在地から一番近い場所の情報が入っている
-  console.log(min);
-  console.log(near);
-  document.querySelector('#sta1').innerText = near[0];
-  document.querySelector('#sta2').innerText = near[1];
+  console.log("min", min);
+  console.log("near",near);
+  document.querySelector('#sta1').innerText = near[0].sta;
+  document.querySelector('#sta2').innerText = near[1].sta;
+  let line_id = near[0].id;
+  console.log(sta_num);
+  let line_name = sta_num[ line_id.match(/^[a-zA-Z]+/) ];
+  console.log( line_name );
+  document.querySelector('#line').innerText = line_name;
 }
 
 /***** 位置情報が取得できない場合 *****/
