@@ -58,17 +58,26 @@ function successCallback(position) {
     return [station1, station2]
   }
   let min = getMin( dataList, lat, lng );
-  let near = getNear( dataList, min );
-  // 並べ替えが終わるとposition[0]に現在地から一番近い場所の情報が入っている
-  console.log("min", min);
-  console.log("near",near);
-  document.querySelector('#sta1').innerText = near[0].sta;
-  document.querySelector('#sta2').innerText = near[1].sta;
-  let line_id = near[0].id;
-  console.log(sta_num);
-  let line_name = sta_num[ line_id.match(/^[a-zA-Z]+/) ];
-  console.log( line_name );
-  document.querySelector('#line').innerText = line_name;
+  if( "sta" in dataList ) {
+    document.querySelector('#sta').innerText = min.sta;
+    let line_id = min.id;
+    //console.log(sta_num);
+    let line_name = sta_num[ line_id.match(/^[a-zA-Z]+/) ];
+    //console.log( line_name );
+    document.querySelector('#line').innerText = line_name;
+  } else {
+    let near = getNear( dataList, min );
+    // 並べ替えが終わるとposition[0]に現在地から一番近い場所の情報が入っている
+    console.log("min", min);
+    console.log("near",near);
+    document.querySelector('#sta1').innerText = near[0].sta;
+    document.querySelector('#sta2').innerText = near[1].sta;
+    let line_id = near[0].id;
+    //console.log(sta_num);
+    let line_name = sta_num[ line_id.match(/^[a-zA-Z]+/) ];
+    //console.log( line_name );
+    document.querySelector('#line').innerText = line_name;
+  }
 }
 
 /***** 位置情報が取得できない場合 *****/
