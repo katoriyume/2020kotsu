@@ -3,8 +3,8 @@ navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
 
 /***** ユーザーの現在の位置情報を取得 *****/
 function successCallback(position) {
-  var lat = 35.70232182921357        //position.coords.latitude;
-  var lng = 139.97757647875227      //position.coords.longitude;
+  var lat = 35.696387236293795        //position.coords.latitude;
+  var lng = 139.96703258972653     //position.coords.longitude;
 
   const getMin = ( hash, lat, lng ) => {
     let min = (lat - hash[0].lat)**2 + (lng - hash[0].lng)**2;
@@ -17,6 +17,12 @@ function successCallback(position) {
     }
     return minObj;
   }
+
+  /*
+  const getLine = ( hash, lat, lng ) => {
+    let line =
+  }
+*/
   const getStation = ( hash, id, direction ) => {
     let end_condition;
     if( direction == -1 ) end_condition = 0;
@@ -53,10 +59,10 @@ function successCallback(position) {
     document.querySelector('#sta1').innerText = near[0].sta;
     document.querySelector('#sta2').innerText = near[1].sta;
     let line_id1 = near[0].id;
-    let line_id2 = near[0].id;
+    let line_id2 = near[1].id;
     //console.log(near[0]);
     //console.log(near[1]);
-
+   
     //console.log(sta_num);
     let line_name1 = sta_num[ line_id1.match(/^[a-zA-Z]+/) ];
     let line_name2 = sta_num[ line_id2.match(/^[a-zA-Z]+/) ];
