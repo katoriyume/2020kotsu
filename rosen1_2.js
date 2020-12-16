@@ -50,7 +50,7 @@ function successCallback(position) {
     document.querySelector('#line').innerText = line_name;
   } else {
     let near = getNear( dataList, min );
-    
+
     console.log("min", min);
     console.log("near",near);
     document.querySelector('#sta1').innerText = near[0].sta;
