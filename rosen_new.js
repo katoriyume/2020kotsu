@@ -1,22 +1,45 @@
 
+
 class Boarding {
   constructor( hashData ) {
+    /** @type {Array} 地点座標 */
     this.arrayed_hash = hashData;
+    /** @type {Number} 現在地から近いと判定する際の経度・緯度の許容範囲 */
     this.range = 0.01;
   }
+
+  /**
+   * this.arrayed_haseに入っている位置データから，現在地に近いものだけを取り出す
+   * @param {Number} lat GPSから取得した緯度
+   * @return {Boarding} 位置が近い点
+   */
   lat_filter( lat ) {
     return new Boarding( this.arrayed_hash.filter( data => ( lat - this.range < data.lat ) && ( data.lat < lat + this.range ) ) );
-    // dataはhashDataに入っている個々の駅の情報
   }
+  /**
+   * this.arrayed_haseに入っている位置データから，現在地に近いものだけを取り出す
+   * @param {Number} lng GPSから取得した経度
+   * @return {Boarding} 位置が近い点
+   */
   lng_filter( lng ) {
     return new Boarding( this.arrayed_hash.filter( data => ( lng - this.range < data.lng ) && ( data.lng < lng + this.range ) ) );
-    // dataはhashDataに入っている個々の駅の情報
   }
+  /**
+   * this_arrayed_hashから，重複しない形で路線名を取り出す
+   * @return {Array.<>} 路線名の配列
+   */
   get_lines() {
     return this.arrayed_hash.map( data => data.line ).filter( ( element, index, array ) => array.indexOf(element) == index );
     // arrayed_hash内の駅名のみを取得し，重複を削除
   }
 
+  /**
+   * 路線ごとに最も近いポイントを返す
+   * @param {String[]} lines 路線一覧
+   * @param {Number} lat 現在地の緯度
+   * @param {Number} lng 現在地の経度
+   * @return {Object[]} 路線ごとに最も近いポイント
+   */
   get_points( lines, lat, lng ) {
     console.log(this.arrayed_hash);
     return lines.map( (line, i, array) => {
@@ -83,7 +106,26 @@ function dummy(position) {
   console.log( nearest );
 
   for( let n of nearest ) {
-    console.log( "路線候補：" + sta_num[n.line] );
+    console.log( "路線候補：" + sta_num[n.line].name );
+  }
+  let base = document.querySelector('#lines');
+  base.innerHTML = '';
+  for( let n of nearest ) {
+    let s = document.createElement('span');
+    s.innerText = sta_num[n.line].name;
+    base.appendChild(s);
+    let b1 = document.createElement('button');
+    b1.setAttribute('type','button');
+    b1.setAttribute('value',sta_num[n.line].dir1);
+    b1.innerText = sta_num[n.line].dir1;
+    base.appendChild(b1);
+    let b2 = document.createElement('button');
+    b2.setAttribute('type','button');
+    b2.setAttribute('value',sta_num[n.line].dir2);
+    b2.innerText = sta_num[n.line].dir2;
+    base.appendChild(b2);
+    let br = document.createElement('br');
+    base.appendChild(br);
   }
 }
 /***** ユーザーの現在の位置情報を取得 *****/
