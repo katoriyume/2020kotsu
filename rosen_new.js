@@ -26,7 +26,7 @@ class Boarding {
   }
   /**
    * this_arrayed_hashから，重複しない形で路線名を取り出す
-   * @return {Array.<>} 路線名の配列
+   * @return {String[]} 路線名記号の配列
    */
   get_lines() {
     return this.arrayed_hash.map( data => data.line ).filter( ( element, index, array ) => array.indexOf(element) == index );
